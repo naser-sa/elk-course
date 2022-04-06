@@ -5,6 +5,7 @@ POST cities/_doc
     "dynamic_templates": [
       {
         "float_as_float": {
+          "match_mapping_type":"float"
           "match": "Float-",
           "runtime": {
             "type": "float"
@@ -12,7 +13,8 @@ POST cities/_doc
         }
       },
       {
-        "float_as_float": {
+        "full_as_string": {
+          "match_mapping_type":"string"
           "match": "Full-",
           "runtime": {
             "type": "text"
