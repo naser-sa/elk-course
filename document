@@ -1,13 +1,16 @@
-GET _cat/indices
 
+GET _cat/indices
 DELETE movies
 
 PUT movies
 {
   "mappings": {
-    "name": {"type": "keyword"},
-    "released": {"type": "date"},
-    "rating": {"type": "integer"},
-    "genere": {"type": "keyword"}
+    "properties": {
+      "name": {"type": "keyword"},
+      "released": {"type": "date"},
+      "rating": {"type": "integer"},
+      "genere": {"type": "keyword"}
+    }
   }
 }
+
