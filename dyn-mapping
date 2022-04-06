@@ -1,14 +1,23 @@
 DELETE cities
-POST cities/_doc
+PUT cities
 {
   "mappings": {
     "dynamic_templates": [
       {
-        "float_as_float": {
-          "match_mapping_type":"string",
+        "string_as_float": {
+          "match_mapping_type": "string",
           "match": "Float-*",
-          "runtime": {
+          "mapping": {
             "type": "float"
+          }
+        }
+      },
+      {
+        "string_as_int": {
+          "match_mapping_type": "string",
+          "match": "Int-*",
+          "mapping": {
+            "type": "integer"
           }
         }
       }
@@ -16,7 +25,9 @@ POST cities/_doc
   }
 }
 
+
 GET cities
+GET cities/_search
 
 PUT cities/_doc/1
 {
@@ -25,5 +36,10 @@ PUT cities/_doc/1
 
 PUT cities/_doc/2
 {
-  "Full-avgIncome": "111111.123"
+  "avgIncome": "str"
 }
+PUT cities/_doc/3
+{
+  "Int-population": "111111"
+}
+
