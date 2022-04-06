@@ -5,22 +5,25 @@ POST cities/_doc
     "dynamic_templates": [
       {
         "float_as_float": {
-          "match_mapping_type":"float"
-          "match": "Float-",
+          "match_mapping_type":"string",
+          "match": "Float-*",
           "runtime": {
             "type": "float"
-          }
-        }
-      },
-      {
-        "full_as_string": {
-          "match_mapping_type":"string"
-          "match": "Full-",
-          "runtime": {
-            "type": "text"
           }
         }
       }
     ]
   }
+}
+
+GET cities
+
+PUT cities/_doc/1
+{
+  "Float-avgIncome": "111111.123"
+}
+
+PUT cities/_doc/2
+{
+  "Full-avgIncome": "111111.123"
 }
