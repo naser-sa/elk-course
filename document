@@ -14,3 +14,32 @@ PUT movies
   }
 }
 
+
+DELETE movies
+
+PUT movies
+{
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "released": {
+        "type": "date"
+      },
+      "rating": {
+        "type": "integer"
+      },
+      "genere": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+
+GET movies
