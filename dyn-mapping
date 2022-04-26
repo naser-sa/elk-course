@@ -43,3 +43,83 @@ PUT cities/_doc/3
   "Int-population": "111111"
 }
 
+GET /_analyze
+{
+  "tokenizer": "keyword",
+  "char_filter": [
+    "html_strip"
+  ],
+  "text": "<p>I&apos;m so <b>happy</b>!</p>"
+}
+
+GET /_analyze
+{
+  "tokenizer": "keyword",
+  "char_filter": [
+    {
+      "type": "mapping",
+      "mappings": [
+        "٠ => 0",
+        "١ => 1",
+        "٢ => 2",
+        "٣ => 3",
+        "٤ => 4",
+        "٥ => 5",
+        "٦ => 6",
+        "٧ => 7",
+        "٨ => 8",
+        "٩ => 9"
+      ]
+    }
+  ],
+  "text": "My license plate is ٢٥٠١٥"
+}
+
+PUT my-index-000001
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_custom_analyzer": {
+          "type": "custom", 
+          "tokenizer": "standard",
+          "char_filter": [
+            "html_strip"
+          ],
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        }
+      }
+    }
+  }
+}
+
+POST my-index-000001/_analyze
+{
+  "analyzer": "my_custom_analyzer",
+  "text": "Is this <b>déjà vu</b>?"
+}
+
+POST _analyze
+{
+  "tokenizer": "whitespace",
+  "filter": [
+    "lowercase",
+    {
+      "type": "stop",
+      "stopwords": [
+        "a",
+        "is",
+        "this",
+        "and"
+      ]
+    }
+  ],
+  "char_filter": [
+    "html_strip"
+  ],
+  "text": "<a>this is A <em>white and black</em> fox</a>"
+}
+
